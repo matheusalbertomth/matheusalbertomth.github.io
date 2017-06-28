@@ -1,1 +1,117 @@
-https://gist.githubusercontent.com/matheusalbertomth/957047cf1ad9e336867608fae64b715f/raw/e4ebac62d4c75fd67f010a2cdd34077a50b07be5/criatividade.html
+<!DOCTYPE html>
+<head>
+<style>
+div#test{ border:#000 1px solid; padding:10px 40px 40px 40px; }
+</style>
+<script>
+var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, correto = 0;
+var questions = [
+    [ "É um checklist de determinadas atividades que precisam ser desenvolvidas com o máximo de clareza possível por parte dos colaboradores  da empresa. Ele funciona como um mapeamento destas atividades, onde ficará estabelecido o que será feito, quem fará o quê, em qual período de tempo, em qual área da empresa e todos os motivos pelos quais esta atividade deve ser feita. Qual é esta ferramenta de gestão?", 
+	"PDCA", "5W2H", "C3PO", "B" ],
+	
+	[ "Qual inteligência é mais relacionada controlar os movimentos do corpo e a esportisitas? ", 
+	"Espacial", "Interpessoal", "Corporal-cinestésica", "C" ],
+	
+	[ "Qual é o acrônimo para SCAMPER?", 
+	"Substituir, Combinar, Adaptar, Modificar, Procurar outros usos, Eliminar e Rearrumar.", 
+	"Substituir, Computar, Adaptar, Modificar, Procurar outros usos, Executar e Reajustar.", 
+	"Substituir, Combinar, Alterar, Melhorar, Promover outros usos, Eliminar e Rearrumar,", "A" ],
+	
+	[ "De acordo com o método dos seis chapéus, qual chapéu todas as pesssoas são solicitadas a usarem primeiro pelo facilitador?", 
+	"Azul", 
+	"Preto", 
+	"Branco", "C" ],
+	
+	[ "Qual é o nome do processo que envolve um grupo de pessoas comparando suas ideias?", 
+	"Pitch", "feedBack", "Brainstorm", "C" ],
+	
+	[ "De acordo com o método TILMAG, o que é ISE?", 
+	"Exemplos de Solução Ideal", 
+	"Elementos de Solução Ideal ", 
+	"Elementos de Seleção Ideal", "B" ],
+	
+	[ "Qual inteligência é mais relacionada a filósofos? ", 
+	"Existencial", "Linguística", "Espacial", "A" ],
+	
+	[ "Proporcionar planejamento, execução e gestão de projetos a partir de um modelo colaborativo, isto é, um sistema que promove e incentiva a participação das partes envolvidas. Qual é esta ferramenta de gestão?", 
+	"PM Canvas", "PMBOK", "5W2H", "A" ],
+	
+	[ "É um método estruturado para perceber cada principal característica de uma solução e as opções realistas para cada um. qual é esse método?", 
+	"5W2H", "Pitch", " Quadro morfológico", "C" ],
+	
+	[ "É uma abordagem antropocêntrica para inovação que usa ferramentas dos designers para integrar as necessidades das pessoas, as possibilidades da tecnologia e os requisitos para o sucesso dos negócios. Qual é esta ferramenta de gestão?", 
+	"Quadro morfológico", "Design Thinking", "PMBOK", "B" ]
+];
+function _(x){
+	return document.getElementById(x);
+}
+function renderQuestion(){
+	test = _("test");
+	if(pos >= questions.length){
+		test.innerHTML = "<h2>Você acertou "+correto+" de "+questions.length+", Muito Obrigado!!</h2>";
+		_("test_status").innerHTML = "Questionário Completo!";;
+		test.innerHTML += "<button onclick='renderQuestion()'>Refazer questionário</button>";
+		pos = 0;
+		correto = 0;
+		return false;
+	}
+	_("test_status").innerHTML = "Questão "+(pos+1)+" de "+questions.length;
+	question = questions[pos][0];
+	chA = questions[pos][1];
+	chB = questions[pos][2];
+	chC = questions[pos][3];
+	test.innerHTML = "<h3>"+question+"</h3>";
+	test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br><br>";
+	test.innerHTML += "<button onclick='checkAnswer()'>Próxima Questão</button>";
+
+
+}
+
+function checkAnswer(){
+	choices = document.getElementsByName("choices");
+	for(var i=0; i<choices.length; i++){
+		if(choices[i].checked){
+			choice = choices[i].value;
+		}
+	}
+	if(choice == questions[pos][4]){
+		correto++;
+	}
+	pos++;
+	renderQuestion();
+}
+window.addEventListener("load", renderQuestion, false);
+</script>
+
+<script>
+var limit="00:10"
+if (document.images){
+var parselimit=limit.split(":")
+parselimit=parselimit[0]*60+parselimit[1]*1
+}
+function begintimer(){
+if (!document.images)
+return
+if (parselimit==1)
+window.location="msg.html"
+else{ 
+parselimit-=1
+curmin=Math.floor(parselimit/60)
+cursec=parselimit%60
+if (curmin!=0)
+curtime=curmin+" minutes and "+cursec+" seconds left"
+else
+curtime=cursec+" seconds left"
+window.status=curtime
+}
+}
+
+</script>
+</head>
+<body onLoad="begintimer()">
+<h2 id="test_status"></h2>
+<div id="test"></div>
+</body>
+</html>
